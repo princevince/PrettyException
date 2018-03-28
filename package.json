@@ -1,7 +1,7 @@
 {
-    "name": "izzyex",
-    "displayName": "IzzyEx",
-    "description": "Prettifies asp.net exception serialized with JSON.",
+    "name": "pretty-exception",
+    "displayName": "Pretty Exception",
+    "description": "Visual Studio Code extension for formatting exceptions returned by API serialized with JSON.",
     "version": "0.0.1",
     "publisher": "pizycki",
     "engines": {
