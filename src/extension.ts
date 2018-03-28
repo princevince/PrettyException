@@ -57,7 +57,10 @@ class Prettifier {
                 let range = this.getWholeDocumentRange(doc);
                 editor.edit(e => {
                     let text = doc.getText();
-                    text = this.replaceAll(text, '\\\\', '\\'); // Replace \\ with \
+
+                    while (text.includes('\\\\')) {
+                        text = this.replaceAll(text, '\\\\', '\\'); // Replace \\ with \
+                    }
                     text = this.replaceAll(text, '\\r\\n', '\r\n'); // TODO make it configurable
                     e.replace(range, text);
                 });
