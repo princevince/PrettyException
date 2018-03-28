@@ -2,7 +2,7 @@
 _Visual Studio Code extension for formatting exceptions returned by API serialized with JSON._
 
 ## Demo
-![](demo/demo.gif)
+![demo gif](demo/demo.gif)
 
 ## How to install
 Open extension manager in Visual Studio Code and type `Pretty Exception`.
