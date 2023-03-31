@@ -1,53 +1,50 @@
-'use strict';
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import { window, commands, ExtensionContext, TextDocument, TextEditor, Range } from 'vscode';
+import * as vscode from 'vscode';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-export function activate(context: ExtensionContext) {
+// This method is called when your extension is activated
+// Your extension is activated the very first time the command is executed
+export function activate(context: vscode.ExtensionContext) {
 
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "izzyex" is now active!');
+	// Use the console to output diagnostic information (console.log) and errors (console.error)
+	// This line of code will only be executed once when your extension is activated
+	console.log('Congratulations, your extension "pretty-exception" is now active!');
 
-    let prettifier = new Prettifier();
+	// The command has been defined in the package.json file
+	// Now provide the implementation of the command with registerCommand
+	// The commandId parameter must match the command field in package.json
+	let disposable = vscode.commands.registerCommand('pretty-exception.prettify', () => {
+		// The code you place here will be executed every time your command is executed
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = commands.registerCommand('extension.sayHello', () => {
-        // The code you place here will be executed every time your command is executed
+		let prettifier = new Prettifier();
+		prettifier.prettify();
 
-        prettifier.prittify();
+		// Display a message box to the user
+		vscode.window.showInformationMessage('Exception should be pretty now!!');
+	});
 
-        // Display a message box to the user
-        window.showInformationMessage('Exception should be pretty now!!');
-    });
-
-    context.subscriptions.push(disposable);
+	context.subscriptions.push(disposable);
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() {
-}
+// This method is called when your extension is deactivated
+export function deactivate() {}
 
 class Prettifier {
 
-    prittify(): void {
+    prettify(): void {
 
         // Get the current text editor
-        let editor = window.activeTextEditor;
+        let editor = vscode.window.activeTextEditor;
 
-        // If no editor is open, we get 'undifined'
+        // If no editor is open, we get 'undefined'
         if (!editor) {
-            window.showInformationMessage('Open a new text editor first!');
+            vscode.window.showInformationMessage('Open a new text editor first!');
             return;
         }
 
         // Prettify JSON before any text modifications
-        commands.executeCommand("extension.prettifyJSON")
-            .then(_ => {
+        vscode.commands.executeCommand("extension.prettifyJSON")
+            .then((_: any) => {
                 if (editor === undefined) {
                     return;
                 }
@@ -67,9 +64,9 @@ class Prettifier {
             });
     }
 
-    getWholeDocumentRange(doc: TextDocument): Range {
+    getWholeDocumentRange(doc: vscode.TextDocument): vscode.Range {
         let textLength = doc.getText().length;
-        let wholeDocumentTextRange = new Range(
+        let wholeDocumentTextRange = new vscode.Range(
             doc.positionAt(0),
             doc.positionAt(textLength - 1));
         return wholeDocumentTextRange;
